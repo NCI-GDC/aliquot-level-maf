@@ -69,6 +69,32 @@ def test_select_primary_aliquots__uses_maf_creation_date_to_break_tie():
     assert results["case_1"] == PrimaryAliquot(id="1", sample_id="sample_a")
 
 
+def test_select_primary_aliquots__uses_maf_uuid_to_break_tie():
+    criteria = [
+        PrimaryAliquotSelectionCriterion(
+            id="1",
+            samples=[
+                SampleCriterion(id="sample_a", sample_type="Primary Tumor",),
+                SampleCriterion(id="sample_b", sample_type="Blood Derived Normal"),
+            ],
+            case_id="case_1",
+            maf_creation_date=datetime(2020, 1, 1),
+        ),
+        PrimaryAliquotSelectionCriterion(
+            id="2",
+            samples=[
+                SampleCriterion(id="sample_d", sample_type="Primary Tumor",),
+                SampleCriterion(id="sample_e", sample_type="Blood Derived Normal"),
+            ],
+            case_id="case_1",
+            maf_creation_date=datetime(2020, 1, 1),
+        ),
+    ]
+
+    results = select_primary_aliquots(criteria)
+    assert results["case_1"] == PrimaryAliquot(id="1", sample_id="sample_a")
+
+
 def test_select_primary_aliquots__handles_multiple_cases():
     criteria = [
         PrimaryAliquotSelectionCriterion(
