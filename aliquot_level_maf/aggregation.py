@@ -2,7 +2,7 @@ import datetime
 import gzip
 import io
 from collections import OrderedDict
-from typing import NamedTuple, BinaryIO, List, Dict, TextIO
+from typing import NamedTuple, BinaryIO, List, Dict, TextIO, Optional
 
 
 class ValidationError(Exception):
@@ -55,7 +55,10 @@ def aggregate_mafs(mafs: List[AliquotLevelMaf], output: BinaryIO) -> None:
         is_first_pass = True
         for maf in mafs:
             with io.BufferedReader(gzip.open(maf.file, "r")) as reader:
+                # Case where the file content is empty or the user does not have access to a file.
                 file_headers = _read_and_parse_file_headers(reader)
+                if not file_headers:
+                    continue
                 if is_first_pass:
                     expected_file_headers = file_headers
                 _validate_file_headers(
@@ -109,7 +112,11 @@ class _MafFileHeaderBuilder:
         self.properties[key] = value
         return self
 
-    def build(self) -> _MafFileHeader:
+    def build(self) -> Optional[_MafFileHeader]:
+        # If there are no properties then the response from the query was empty.
+        if not self.properties:
+            return None
+
         if not self.version:
             raise ValueError("version must be defined")
 
@@ -123,7 +130,7 @@ class _MafFileHeaderBuilder:
         )
 
 
-def _read_and_parse_file_headers(reader: io.BufferedReader) -> _MafFileHeader:
+def _read_and_parse_file_headers(reader: io.BufferedReader) -> Optional[_MafFileHeader]:
     builder = _MafFileHeaderBuilder()
     while reader.peek(1) and reader.peek(1).decode()[0] == "#":
         line = reader.readline().decode().rstrip()[1:]

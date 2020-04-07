@@ -1,7 +1,7 @@
 import datetime
 import sys
 from collections import defaultdict
-from typing import List, Dict, NamedTuple
+from typing import Dict, List, NamedTuple
 
 # This is the order that sample types should be selected.
 # Lowest rank wins.
@@ -127,7 +127,7 @@ def _group_criteria_by_case(
 def _perform_selection(
     criteria: List[PrimaryAliquotSelectionCriterion],
 ) -> PrimaryAliquot:
-    primary = _select_oldest(_select_by_sample_type(criteria))
+    primary = _tiebreaker(_select_by_sample_type(criteria))
     return PrimaryAliquot(id=primary.id, sample_id=primary.samples[0].id)
 
 
@@ -172,7 +172,13 @@ def _select_by_sample_type(
     return primaries
 
 
-def _select_oldest(
+def _tiebreaker(
     criteria: List[PrimaryAliquotSelectionCriterion],
 ) -> PrimaryAliquotSelectionCriterion:
-    return sorted(criteria, key=lambda c: c.maf_creation_date)[0]
+    """Choose the tiebreaker in the event that the ranks are the same
+
+    First sort on the created datetime for the maf.
+    Then sort by the string representation of the uuid for the maf.
+    """
+
+    return sorted(criteria, key=lambda c: (c.maf_creation_date, c.id))[0]
