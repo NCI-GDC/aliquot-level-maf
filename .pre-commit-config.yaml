@@ -12,3 +12,8 @@
     rev: 3.7.9
     hooks:
     -   id: flake8
+-   repo: git@github.com:Yelp/detect-secrets
+    rev: v0.13.0
+    hooks:
+    -   id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
