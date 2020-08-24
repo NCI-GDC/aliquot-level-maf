@@ -68,9 +68,6 @@ def select_primary_aliquots(
 ) -> Dict[str, PrimaryAliquot]:
     """Select the primary-aliquot for each entity.
 
-    If disable_aliquot_selection is set, select primary aliquot per file
-    If dislabe-aliquot_selection is not set, select primary aliquot per case
-
     For primary aliquot selection, the MAFs are ranked based on sample.sample_type, in
     the following order:
 
