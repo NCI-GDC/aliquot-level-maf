@@ -40,13 +40,14 @@ class PrimaryAliquotSelectionCriterion(NamedTuple):
     Attributes:
         id: Any identifier.
         samples: The samples that the aliquots came from.
-        case_id: The id of the case that the aliquot came from.
+        entity_id: A primary aliquot will be chosen
+                   per this entity (file_id, case_id, etc.).
         maf_creation_date: The date the MAF file was created in the graph.
     """
 
     id: str
     samples: List[SampleCriterion]
-    case_id: str
+    entity_id: str
     maf_creation_date: datetime.datetime
 
 
@@ -65,7 +66,7 @@ class PrimaryAliquot(NamedTuple):
 def select_primary_aliquots(
     criteria: List[PrimaryAliquotSelectionCriterion],
 ) -> Dict[str, PrimaryAliquot]:
-    """Select the primary-aliquot for each case.
+    """Select the primary-aliquot for each entity.
 
     For primary aliquot selection, the MAFs are ranked based on sample.sample_type, in
     the following order:
@@ -88,13 +89,13 @@ def select_primary_aliquots(
         criteria: A list of selection criteria for each aliquot-level MAF
 
     Returns:
-        A dictionary of case ids to primary aliquot
+        A dictionary of entity ids to primary aliquot
     """
     if not criteria:
         return dict()
 
-    criteria_by_case = _group_criteria_by_case(_flatten(criteria))
-    return {case_id: _perform_selection(cs) for case_id, cs in criteria_by_case.items()}
+    criteria_by_entity = _group_criteria_by_entity(_flatten(criteria))
+    return {entity: _perform_selection(cs) for entity, cs in criteria_by_entity.items()}
 
 
 def _flatten(
@@ -108,20 +109,20 @@ def _flatten(
                 PrimaryAliquotSelectionCriterion(
                     id=criterion.id,
                     samples=[sample],
-                    case_id=criterion.case_id,
+                    entity_id=criterion.entity_id,
                     maf_creation_date=criterion.maf_creation_date,
                 )
             )
     return flattened
 
 
-def _group_criteria_by_case(
+def _group_criteria_by_entity(
     criteria: List[PrimaryAliquotSelectionCriterion],
 ) -> Dict[str, List[PrimaryAliquotSelectionCriterion]]:
-    criteria_by_case = defaultdict(list)
+    criteria_by_entity = defaultdict(list)
     for criterion in criteria:
-        criteria_by_case[criterion.case_id].append(criterion)
-    return criteria_by_case
+        criteria_by_entity[criterion.entity_id].append(criterion)
+    return criteria_by_entity
 
 
 def _perform_selection(
