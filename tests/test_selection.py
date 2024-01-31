@@ -13,7 +13,10 @@ def test_select_primary_aliquots__selects_correct_sample_type():
         PrimaryAliquotSelectionCriterion(
             id="1",
             samples=[
-                SampleCriterion(id="sample_1", sample_type="Ectoplasm",),
+                SampleCriterion(
+                    id="sample_1",
+                    sample_type="Ectoplasm",
+                ),
                 SampleCriterion(id="sample_2", sample_type="Muslin"),
             ],
             entity_id="case_1",
@@ -22,8 +25,14 @@ def test_select_primary_aliquots__selects_correct_sample_type():
         PrimaryAliquotSelectionCriterion(
             id="2",
             samples=[
-                SampleCriterion(id="sample_3", sample_type="Primary Tumor",),
-                SampleCriterion(id="sample_4", sample_type="Blood Derived Normal",),
+                SampleCriterion(
+                    id="sample_3",
+                    sample_type="Primary Tumor",
+                ),
+                SampleCriterion(
+                    id="sample_4",
+                    sample_type="Blood Derived Normal",
+                ),
             ],
             entity_id="case_1",
             maf_creation_date=datetime(2020, 1, 1),
@@ -31,8 +40,14 @@ def test_select_primary_aliquots__selects_correct_sample_type():
         PrimaryAliquotSelectionCriterion(
             id="3",
             samples=[
-                SampleCriterion(id="sample_5", sample_type="Unknown",),
-                SampleCriterion(id="sample_6", sample_type="Recurrent Tumor",),
+                SampleCriterion(
+                    id="sample_5",
+                    sample_type="Unknown",
+                ),
+                SampleCriterion(
+                    id="sample_6",
+                    sample_type="Recurrent Tumor",
+                ),
             ],
             entity_id="case_1",
             maf_creation_date=datetime(2020, 1, 1),
@@ -48,7 +63,10 @@ def test_select_primary_aliquots__uses_maf_creation_date_to_break_tie():
         PrimaryAliquotSelectionCriterion(
             id="1",
             samples=[
-                SampleCriterion(id="sample_a", sample_type="Primary Tumor",),
+                SampleCriterion(
+                    id="sample_a",
+                    sample_type="Primary Tumor",
+                ),
                 SampleCriterion(id="sample_b", sample_type="Blood Derived Normal"),
             ],
             entity_id="case_1",
@@ -57,7 +75,10 @@ def test_select_primary_aliquots__uses_maf_creation_date_to_break_tie():
         PrimaryAliquotSelectionCriterion(
             id="2",
             samples=[
-                SampleCriterion(id="sample_d", sample_type="Primary Tumor",),
+                SampleCriterion(
+                    id="sample_d",
+                    sample_type="Primary Tumor",
+                ),
                 SampleCriterion(id="sample_e", sample_type="Blood Derived Normal"),
             ],
             entity_id="case_1",
@@ -74,7 +95,10 @@ def test_select_primary_aliquots__uses_maf_uuid_to_break_tie():
         PrimaryAliquotSelectionCriterion(
             id="1",
             samples=[
-                SampleCriterion(id="sample_a", sample_type="Primary Tumor",),
+                SampleCriterion(
+                    id="sample_a",
+                    sample_type="Primary Tumor",
+                ),
                 SampleCriterion(id="sample_b", sample_type="Blood Derived Normal"),
             ],
             entity_id="case_1",
@@ -83,7 +107,10 @@ def test_select_primary_aliquots__uses_maf_uuid_to_break_tie():
         PrimaryAliquotSelectionCriterion(
             id="2",
             samples=[
-                SampleCriterion(id="sample_d", sample_type="Primary Tumor",),
+                SampleCriterion(
+                    id="sample_d",
+                    sample_type="Primary Tumor",
+                ),
                 SampleCriterion(id="sample_e", sample_type="Blood Derived Normal"),
             ],
             entity_id="case_1",
@@ -100,7 +127,10 @@ def test_select_primary_aliquots__handles_multiple_cases():
         PrimaryAliquotSelectionCriterion(
             id="1",
             samples=[
-                SampleCriterion(id="sample_1", sample_type="Ectoplasm",),
+                SampleCriterion(
+                    id="sample_1",
+                    sample_type="Ectoplasm",
+                ),
                 SampleCriterion(id="sample_2", sample_type="Muslin"),
             ],
             entity_id="case_1",
@@ -109,8 +139,14 @@ def test_select_primary_aliquots__handles_multiple_cases():
         PrimaryAliquotSelectionCriterion(
             id="2",
             samples=[
-                SampleCriterion(id="sample_3", sample_type="Primary Tumor",),
-                SampleCriterion(id="sample_4", sample_type="Blood Derived Normal",),
+                SampleCriterion(
+                    id="sample_3",
+                    sample_type="Primary Tumor",
+                ),
+                SampleCriterion(
+                    id="sample_4",
+                    sample_type="Blood Derived Normal",
+                ),
             ],
             entity_id="case_1",
             maf_creation_date=datetime(2020, 1, 1),
@@ -118,8 +154,14 @@ def test_select_primary_aliquots__handles_multiple_cases():
         PrimaryAliquotSelectionCriterion(
             id="3",
             samples=[
-                SampleCriterion(id="sample_5", sample_type="Unknown",),
-                SampleCriterion(id="sample_6", sample_type="Recurrent Tumor",),
+                SampleCriterion(
+                    id="sample_5",
+                    sample_type="Unknown",
+                ),
+                SampleCriterion(
+                    id="sample_6",
+                    sample_type="Recurrent Tumor",
+                ),
             ],
             entity_id="case_2",
             maf_creation_date=datetime(2020, 1, 1),
