@@ -55,7 +55,8 @@ def aggregate_mafs(mafs: List[AliquotLevelMaf], output: BinaryIO) -> None:
         is_first_pass = True
         for maf in mafs:
             with io.BufferedReader(gzip.open(maf.file, "r")) as reader:
-                # Case where the file content is empty or the user does not have access to a file.
+                # Case where the file content is empty or the user does not have access
+                # to a file.
                 file_headers = _read_and_parse_file_headers(reader)
                 if not file_headers:
                     continue
