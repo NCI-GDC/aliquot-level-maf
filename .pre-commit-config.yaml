@@ -1,19 +1,21 @@
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
-    hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/psf/black
-    rev: 19.10b0
-    hooks:
-    -   id: black
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.9
-    hooks:
-    -   id: flake8
--   repo: git@github.com:Yelp/detect-secrets
-    rev: v0.13.0
-    hooks:
-    -   id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
+---
+repos:
+    -   repo: https://github.com/pre-commit/pre-commit-hooks
+        rev: v2.5.0
+        hooks:
+        -   id: check-yaml
+        -   id: end-of-file-fixer
+        -   id: trailing-whitespace
+    -   repo: https://github.com/psf/black
+        rev: 22.6.0
+        hooks:
+        -   id: black
+    -   repo: https://github.com/PyCQA/flake8
+        rev: 3.7.9
+        hooks:
+        -   id: flake8
+    -   repo: git@github.com:Yelp/detect-secrets
+        rev: v1.4.0
+        hooks:
+        -   id: detect-secrets
+            args: ['--baseline', '.secrets.baseline']
