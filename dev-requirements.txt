@@ -41,7 +41,7 @@ pytest==5.4.1             # via -r dev-requirements.in, pytest-cov
 python-dateutil==2.8.1    # via freezegun
 pyyaml==5.3.1             # via bandit, detect-secrets, pre-commit
 regex==2020.2.20          # via black
-requests==2.23.0          # via detect-secrets
+requests==2.32.4          # via detect-secrets
 six==1.14.0               # via bandit, freezegun, packaging, pip-tools, python-dateutil, stevedore, virtualenv
 smmap==3.0.1              # via gitdb
 stevedore==1.32.0         # via bandit
